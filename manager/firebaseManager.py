@@ -1,11 +1,12 @@
 import firebase_admin
 from firebase_admin import credentials, initialize_app, firestore, storage
-import os
-from dotenv import load_dotenv
+from os.path import os, join, dirname
+from dotenv import load_dotenv, find_dotenv
 
-load_dotenv()
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(find_dotenv())
 
-serviceAccountKey = {
+service_account_key = {
     "type": os.getenv("TYPE"),
     "project_id": os.getenv("PROJECT_ID"),
     "private_key_id": os.getenv("PRIVATE_KEY_ID"),
@@ -19,14 +20,12 @@ serviceAccountKey = {
     "universe_domain": os.getenv("UNIVERSE_DOMAIN"),
 }
 
-cred = credentials.Certificate(serviceAccountKey)
+storage_bucket_name_link = os.getenv("STORAGE_BUCKET_URL")
+
+cred = credentials.Certificate(service_account_key)
 firebase_admin.initialize_app(cred, {
-    "storageBucket": "seeyoursound-d16ca.appspot.com"
+    "storageBucket": storage_bucket_name_link
 })
-
-db = firestore.client()
-bucket = storage.bucket()
-
 
 db = firestore.client()
 bucket = storage.bucket()
