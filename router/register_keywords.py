@@ -4,7 +4,7 @@ from firebase_admin.firestore import ArrayUnion
 from pydantic import BaseModel
 import re
 
-router = APIRouter()
+reg_router = APIRouter()
 
 class UserData(BaseModel):
     user_inherent_id: str
@@ -18,7 +18,7 @@ def validate_user_data(user_data: UserData):
     if not re.match(r'^[가-힣]+$', user_data.user_new_keyword):
         raise HTTPException(status_code=400, detail="키워드는 한글로만 입력이 가능합니다.")
 
-@router.post("/receive_data")
+@reg_router.post("/receive_data")
 async def receive_data(user_data: UserData):
         validate_user_data(user_data)
         keywords_ref = db.collection("Users").document(user_data.user_inherent_id)
