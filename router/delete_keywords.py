@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from manager.firebase_manager import firestore, db
 from pydantic import BaseModel
 
@@ -17,9 +17,9 @@ async def delete_data(user_data: UserData):
         if user_data.user_deleting_keyword in existing_keywords:
             existing_keywords.remove(user_data.user_deleting_keyword)
             user_ref.update({"keywords": existing_keywords})
-            return "해당 키워드를 삭제하였습니다."
+            raise HTTPException(status_code=200, detail="해당 키워드를 성공적으로 삭제하였습니다.")
         else:
-            return "사용자 키워드 목록에 존재하지 않는 키워드입니다."
+            raise HTTPException(status_code=400, detail="사용자 키워드 리스트에 존재하지 않는 키워드입니다.")
         exit
     else:
-        return "등록돼 있지 않은 사용자입니다."
+        raise HTTPException(status_code=400, detail="등록돼 있지 않은 사용자입니다.")
