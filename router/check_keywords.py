@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from manager.firebase_manager import firestore, db
 from pydantic import BaseModel
 
@@ -13,6 +13,6 @@ async def return_keyword(user_data: UserData):
     doc = user_ref.get()
     if doc.exists:
         existing_keywords = doc.to_dict().get("keywords", [])
-        return existing_keywords
+        return {"keywords": existing_keywords}
     else:
-        return "등록돼 있지 않은 사용자입니다."
+        raise HTTPException(status_code=400, detail="등록돼 있지 않은 사용자입니다.")
