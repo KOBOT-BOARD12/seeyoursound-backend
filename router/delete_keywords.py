@@ -20,6 +20,5 @@ async def delete_data(user_data: UserData):
             raise HTTPException(status_code=200, detail="해당 키워드를 성공적으로 삭제하였습니다.")
         else:
             raise HTTPException(status_code=400, detail="사용자 키워드 리스트에 존재하지 않는 키워드입니다.")
-        exit
     else:
         raise HTTPException(status_code=400, detail="등록돼 있지 않은 사용자입니다.")
