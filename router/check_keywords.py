@@ -6,6 +6,7 @@ existing_keyword_router = APIRouter()
 
 class UserData(BaseModel):
     user_inherent_id: str
+    
 @existing_keyword_router.post("/return_keyword")
 async def return_keyword(user_data: UserData):
     user_ref = db.collection("Users").document(user_data.user_inherent_id)
