@@ -24,7 +24,7 @@ def bytes_to_wav(bytes_data, file_name):
 
 @ws_router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accpet()
+    await websocket.accept()
     global connected_websocket
     connected_websocket += "websocket"
     try:
@@ -69,4 +69,3 @@ async def ex(model_result: dict = Body(None)):
         await connected_websocket.send_text(resource.decode())
     else:
         raise HTTPException(status_code=400, detail="")
-    
