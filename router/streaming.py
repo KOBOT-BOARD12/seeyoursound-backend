@@ -2,12 +2,16 @@ import wave
 import json
 import base64
 import configparser as parser
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, UploadFile, File, Body
 
 properties = parser.ConfigParser()
 properties.read("config.ini")
 
 ws_router = APIRouter()
+ex_router = APIRouter()
+ms_router = APIRouter()
+
+connected_websocket = ""
 
 def bytes_to_wav(bytes_data, file_name):
     wav_detail = properties["WAV_DETAIL"]
@@ -20,6 +24,17 @@ def bytes_to_wav(bytes_data, file_name):
 
 @ws_router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    global connected_websocket
+    try:
+        print("WebSocket connected.")
+        while True:
+            data = await websocket.receive_text()
+
+    except WebSocketDisconnect:
+        connected_websocket = ""
+        print("WebSocket closed.")
+        
     chunk_count = int(properties["AUDIO_DATA"]["chunk_count"])  
     top_channel_arr = []
     bottom_channel_arr = []
@@ -47,3 +62,16 @@ async def websocket_endpoint(websocket: WebSocket):
 
     except WebSocketDisconnect:
         print("WebSocket closed.")
+        
+@ms_router.post("/send-message")
+async def send_message_to_clients(message: str):
+    await connected_websocket.send_text(message)
+
+@ex_router.post("/ex")
+async def ex(model_result: dict = Body(None)):
+    resource = await model_result.read()
+    if connected_websocket:
+        await connected_websocket.send_text(resource.decode())
+    else:
+        raise HTTPException(status_code=400, detail="")
+    
