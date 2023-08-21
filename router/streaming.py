@@ -12,15 +12,15 @@ ws_router = APIRouter()
 def bytes_to_wav(bytes_data, file_name):
     wav_detail = properties["WAV_DETAIL"]
     with wave.open("data/" + file_name, 'wb') as wf:
-        wf.setnchannels(wav_detail["num_channels"])
-        wf.setsampwidth(wav_detail["sample_width"])
-        wf.setframerate(wav_detail["sample_rate"])
+        wf.setnchannels(int(wav_detail["num_channels"]))
+        wf.setsampwidth(int(wav_detail["sample_width"]))
+        wf.setframerate(int(wav_detail["sample_rate"]))
         wf.writeframes(bytes_data)
     wf.close()
 
 @ws_router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-    chunk_count = properties["AUDIO_DATA"]["chunk_count"]  
+    chunk_count = int(properties["AUDIO_DATA"]["chunk_count"])  
     top_channel_arr = []
     bottom_channel_arr = []
     await websocket.accept()
