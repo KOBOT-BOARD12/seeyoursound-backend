@@ -8,7 +8,7 @@ properties = parser.ConfigParser()
 properties.read("config.ini")
 
 ws_router = APIRouter()
-ex_router = APIRouter()
+model_predictions_router = APIRouter()
 
 connected_websocket = None
 def bytes_to_wav(bytes_data, file_name):
@@ -24,14 +24,7 @@ def bytes_to_wav(bytes_data, file_name):
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     global connected_websocket
-    connected_websocket = websocket #웹소켓 객체 그 자체를 저장해야 하
-    try:
-        print("WebSocket connected.")
-
-    except WebSocketDisconnect:
-        connected_websocket = ""
-        print("WebSocket closed.")
-        
+    connected_websocket = websocket
     chunk_count = int(properties["AUDIO_DATA"]["chunk_count"])  
     top_channel_arr = []
     bottom_channel_arr = []
@@ -59,13 +52,13 @@ async def websocket_endpoint(websocket: WebSocket):
 
     except WebSocketDisconnect:
         print("WebSocket closed.")
+        connected_websocket = None
 
-@ex_router.post("/ex")
-async def ex(model_result: dict = Body(None)):
-    resource = await model_result.read()
+@model_predictions_router.post("/model_predictions")
+async def model_predictions(model_result: dict = Body(None)):
+    prediction = await model_result.read()
     if connected_websocket:
-        await connected_websocket.send_text(model_result) #send_text: 연결된 모든 웹소켓에 전송, 
+        await connected_websocket.send_text(prediction) 
         
     else:
-        raise HTTPException(status_code=400, detail="")
-    # ex는 모델 서빙 서버에서 호출돼서 결과값을 받아 클라이언트에게 보낸다
+        raise HTTPException(status_code=400, detail="연결된 웹소켓이 존재하지 않습니다.")
