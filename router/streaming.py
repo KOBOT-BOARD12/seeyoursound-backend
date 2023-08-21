@@ -10,8 +10,7 @@ properties.read("config.ini")
 ws_router = APIRouter()
 ex_router = APIRouter()
 
-connected_websocket = ""
-
+connected_websocket = None
 def bytes_to_wav(bytes_data, file_name):
     wav_detail = properties["WAV_DETAIL"]
     with wave.open("data/" + file_name, 'wb') as wf:
@@ -25,7 +24,7 @@ def bytes_to_wav(bytes_data, file_name):
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     global connected_websocket
-    connected_websocket += "websocket"
+    connected_websocket = websocket #웹소켓 객체 그 자체를 저장해야 하
     try:
         print("WebSocket connected.")
 
@@ -65,6 +64,8 @@ async def websocket_endpoint(websocket: WebSocket):
 async def ex(model_result: dict = Body(None)):
     resource = await model_result.read()
     if connected_websocket:
-        await connected_websocket.send_text(resource.decode())
+        await connected_websocket.send_text(model_result) #send_text: 연결된 모든 웹소켓에 전송, 
+        
     else:
         raise HTTPException(status_code=400, detail="")
+    # ex는 모델 서빙 서버에서 호출돼서 결과값을 받아 클라이언트에게 보낸다
