@@ -9,7 +9,6 @@ properties.read("config.ini")
 
 ws_router = APIRouter()
 ex_router = APIRouter()
-ms_router = APIRouter()
 
 connected_websocket = ""
 
