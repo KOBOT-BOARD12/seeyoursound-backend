@@ -22,15 +22,14 @@ def bytes_to_wav(bytes_data, file_name):
 
 @ws_router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    global connected_websocket
-    connected_websocket = websocket
     chunk_count = int(properties["AUDIO_DATA"]["chunk_count"])  
     top_channel_arr = []
     bottom_channel_arr = []
     await websocket.accept()
+    global connected_websocket
+    connected_websocket = websocket
+    print("WebSocket connected.")
     try:
-        print("WebSocket connected.")
         while True:
             data = await websocket.receive_text()
             json_data = json.loads(data)
@@ -59,6 +58,5 @@ async def model_predictions(model_result: dict = Body(None)):
     prediction = await model_result.read()
     if connected_websocket:
         await connected_websocket.send_text(prediction) 
-        
     else:
         raise HTTPException(status_code=400, detail="연결된 웹소켓이 존재하지 않습니다.")
