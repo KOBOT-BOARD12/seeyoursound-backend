@@ -22,7 +22,7 @@ class DeleteKeyword(BaseModel):
 def validate_keyword(keyword: str):
     if not keyword:
         raise HTTPException(status_code=400, detail="키워드를 입력해 주세요.")
-    if len(keyword) > 5:
+    if len(keyword) > 3:
         raise HTTPException(status_code=400, detail="키워드는 다섯 글자 이하로 입력해 주셔야 합니다.")
     if not re.match(r'^[가-힣]+$', keyword):
         raise HTTPException(status_code=400, detail="키워드는 한글로만 입력이 가능합니다.")
