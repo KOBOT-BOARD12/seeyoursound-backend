@@ -47,7 +47,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 bottom_channel_arr.pop(0)
 
             gy_x, gy_y, gy_z = json_data["gy_x"], json_data["gy_y"], json_data["gy_z"]
-            # TODO : send data to model serving server
+            ma_x, ma_y, ma_z = json_data["ma_x"], json_data["ma_y"], json_data["ma_z"]
 
     except WebSocketDisconnect:
         print("WebSocket closed.")
