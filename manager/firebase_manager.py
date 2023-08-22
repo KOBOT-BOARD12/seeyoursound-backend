@@ -26,4 +26,4 @@ firebase_admin.initialize_app(cred, {
 })
 
 db = firestore.client()
-bucket = storage.bucket()
+bucket = storage.bucket() # 지울 가능성 다분

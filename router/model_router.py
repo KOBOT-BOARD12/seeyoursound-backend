@@ -1,3 +1,5 @@
+# 지울 가능성 다분
+
 from fastapi import APIRouter, File, UploadFile, Form
 from manager.firebase_manager import storage, bucket
 from pydantic import BaseModel
