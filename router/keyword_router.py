@@ -41,25 +41,17 @@ async def receive_data(data: Register):
     doc = keywords_ref.get()
     if doc.exists:
         existing_keywords = doc.to_dict().get("keywords", {})
-
         if keyword in existing_keywords:
             raise HTTPException(status_code=400, detail="이미 존재하는 키워드입니다.")
-
         if len(existing_keywords) >= 3:
             raise HTTPException(status_code=400, detail="키워드는 최대 세 개까지만 추가할 수 있습니다.")
     else:
         existing_keywords = {}
-
     ipa_of_keyword = convert_to_ipa(keyword).replace(' ', '')
-
-    # 기존 맵에 새로운 키워드와 발음(IPA) 추가
     existing_keywords[keyword] = ipa_of_keyword
-
-    # 업데이트된 맵을 저장
     keywords_ref.set({
         "keywords": existing_keywords
     })
-
     return {"message": "키워드가 성공적으로 추가되었습니다."}
 
 @existing_keyword_router.post("/return_keyword")
@@ -69,7 +61,7 @@ async def return_keyword(data: ReturnKeyword):
     doc = user_ref.get()
     if doc.exists:
         existing_keywords = doc.to_dict().get("keywords", [])
-        return {"keywords": existing_keywords}
+        return {"keywords": list(existing_keywords.keys())}
     else:
         raise HTTPException(status_code=400, detail="등록돼 있지 않은 사용자입니다.")
 
@@ -82,7 +74,7 @@ async def delete_data(data: DeleteKeyword):
     if doc.exists:
         existing_keywords = doc.to_dict().get("keywords", [])
         if keyword in existing_keywords:
-            existing_keywords.remove(keyword)
+            existing_keywords.pop(keyword)
             user_ref.update({"keywords": existing_keywords})
             raise HTTPException(status_code=200, detail="해당 키워드를 성공적으로 삭제하였습니다.")
         else:
