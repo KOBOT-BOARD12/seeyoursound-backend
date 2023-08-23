@@ -2,11 +2,16 @@ from fastapi import APIRouter, HTTPException
 from manager.firebase_manager import firestore, db
 from firebase_admin.firestore import ArrayUnion
 from pydantic import BaseModel
+from phonemizer import phonemize
 import re
 
 register_keyword_router = APIRouter()
 existing_keyword_router = APIRouter()
 delete_keywords_router = APIRouter()
+
+def convert_to_ipa(korean_text):
+    ipa_text = phonemize(korean_text, language="ko", backend="espeak")
+    return ipa_text
 
 class Register(BaseModel):
     user_id: str
@@ -35,20 +40,26 @@ async def receive_data(data: Register):
     keywords_ref = db.collection("Users").document(user_id)
     doc = keywords_ref.get()
     if doc.exists:
-        existing_keywords = doc.to_dict().get("keywords", [])
+        existing_keywords = doc.to_dict().get("keywords", {})
+
         if keyword in existing_keywords:
             raise HTTPException(status_code=400, detail="이미 존재하는 키워드입니다.")
 
-        if len(existing_keywords) >= 5:
-            raise HTTPException(status_code=400, detail="키워드는 최대 다섯 개까지만 추가할 수 있습니다.")
-
-        keywords_ref.update({
-            "keywords": firestore.ArrayUnion([keyword])
-        })
+        if len(existing_keywords) >= 3:
+            raise HTTPException(status_code=400, detail="키워드는 최대 세 개까지만 추가할 수 있습니다.")
     else:
-        keywords_ref.set({
-            "keywords": [keyword]
-        })
+        existing_keywords = {}
+
+    ipa_of_keyword = convert_to_ipa(keyword).replace(' ', '')
+
+    # 기존 맵에 새로운 키워드와 발음(IPA) 추가
+    existing_keywords[keyword] = ipa_of_keyword
+
+    # 업데이트된 맵을 저장
+    keywords_ref.set({
+        "keywords": existing_keywords
+    })
+
     return {"message": "키워드가 성공적으로 추가되었습니다."}
 
 @existing_keyword_router.post("/return_keyword")
