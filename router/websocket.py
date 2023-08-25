@@ -13,7 +13,6 @@ properties = parser.ConfigParser()
 properties.read("config.ini")
 
 ws_router = APIRouter()
-model_predictions_router = APIRouter()
 
 connected_websocket = None
 
@@ -38,8 +37,8 @@ async def websocket_endpoint(websocket: WebSocket):
             bottom_channel_arr.append(bottom_channel)
 
             if len(top_channel_arr) == chunk_count and len(bottom_channel_arr) == chunk_count:
-                data = {"top_channel" : ''.join(top_channel_arr), "bottom_channel_arr" : ''.join(bottom_channel_arr), "uid" : uid}
-                requests.post(os.getenv("MODEL_SERVER_URL") + "/prediction", data=json.dumps(data), headers={"Content-Type": "application/json"})
+                data = {"top_channel" : ''.join(top_channel_arr), "bottom_channel" : ''.join(bottom_channel_arr), "uid" : uid}
+                requests.post(os.getenv("MODEL_SERVER_URL") + "/prediction", json=data, headers={'accept': 'application/json','Content-Type': 'application/json'})
                 top_channel_arr.pop(0)
                 bottom_channel_arr.pop(0)
 
@@ -47,7 +46,7 @@ async def websocket_endpoint(websocket: WebSocket):
         print("WebSocket closed.")
         connected_websocket = None
 
-@model_predictions_router.post("/get_model_prediction")
+@ws_router.post("/get_model_prediction")
 async def get_model_prediction(model_result: dict):
     if connected_websocket:
         await connected_websocket.send_text(json.dumps(model_result)) 
