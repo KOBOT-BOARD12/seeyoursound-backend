@@ -5,9 +5,7 @@ from pydantic import BaseModel
 from phonemizer import phonemize
 import re
 
-register_keyword_router = APIRouter()
-existing_keyword_router = APIRouter()
-delete_keywords_router = APIRouter()
+keyword_router = APIRouter()
 
 def convert_to_ipa(korean_text):
     ipa_text = phonemize(korean_text, language="ko", backend="espeak")
@@ -32,7 +30,7 @@ def validate_keyword(keyword: str):
     if not re.match(r'^[가-힣]+$', keyword):
         raise HTTPException(status_code=400, detail="키워드는 한글로만 입력이 가능합니다.")
 
-@register_keyword_router.post("/register_keyword")
+@keyword_router.post("/register_keyword")
 async def receive_data(data: Register):
     validate_keyword(data.keyword)
     user_id = data.user_id
@@ -54,7 +52,7 @@ async def receive_data(data: Register):
     })
     return {"message": "키워드가 성공적으로 추가되었습니다."}
 
-@existing_keyword_router.post("/return_keyword")
+@keyword_router.post("/return_keyword")
 async def return_keyword(data: ReturnKeyword):
     user_id = data.user_id
     user_ref = db.collection("Users").document(user_id)
@@ -65,7 +63,7 @@ async def return_keyword(data: ReturnKeyword):
     else:
         raise HTTPException(status_code=400, detail="등록돼 있지 않은 사용자입니다.")
 
-@delete_keywords_router.post("/delete_keyword")
+@keyword_router.post("/delete_keyword")
 async def delete_data(data: DeleteKeyword):
     user_id = data.user_id
     keyword = data.keyword
