@@ -1,8 +1,8 @@
 import json
-import configparser as parser
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
 import requests
+import configparser as parser
 from os.path import os, join, dirname
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Request
 
 from dotenv import load_dotenv, find_dotenv
 
@@ -47,8 +47,11 @@ async def websocket_endpoint(websocket: WebSocket):
         connected_websocket = None
 
 @ws_router.post("/get_model_prediction")
-async def get_model_prediction(model_result: dict):
+async def get_model_prediction(model_result: Request):
+    req = await model_result.json()
     if connected_websocket:
-        await connected_websocket.send_text(json.dumps(model_result)) 
+        await connected_websocket.send_text(json.dumps(req)) 
     else:
         raise HTTPException(status_code=400, detail="연결된 웹소켓이 존재하지 않습니다.")
+    return {"message": "Prediction is transported to client"}
+    
