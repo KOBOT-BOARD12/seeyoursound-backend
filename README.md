@@ -32,9 +32,10 @@ TOKEN_URI
 AUTH_PROVIDER_X509_CERT_URL
 CLIENT_X509_CERT_URL
 UNIVERSE_DOMAIN
+MODEL_SERVER_URL
 ```
 ---
 ### 5. How to run
 ```python
-uvicorn app:app --reload --host=0.0.0.0 --port={port}
+uvicorn app:app --host=0.0.0.0 --port={port}
 ```
