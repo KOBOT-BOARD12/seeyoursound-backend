@@ -36,6 +36,7 @@
 - Github: <https://github.com/youngseok0>
 - Email : kys030908@kookmin.ac.kr
 - Role
+  - 모델 개발 및 서빙
 
 5. 😨 신수민
 
