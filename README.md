@@ -1,3 +1,50 @@
+# 👀🔉 See Your Sound
+<ㄱ 림>
+### 🔧 개발 배경
+#### 청각 장애인과 길에서 이어폰을 끼고 다니는 즉, 외부 소리가 차단된 사람들이 도로 환경에서 발생하는 소리들을 인식하도록 하는 장치가 필요하다고 생각한다. 
+### 🔦 개발 목적
+#### 소리를 실시간으로 인식 후, 디스플레이 알림과 진동으로 소리의 종류나 미리 등록된 키워드 여부, 소리의 방향을 알려 주는 서비스를 만드는 것이 목적이다.
+---
+# 팀원 소개 및 역할
+1. 👨‍💻 윤민상
+
+- Position : 팀장
+- Github: <https://github.com/minsang22>
+- Email : nornen20@kookmin.ac.kr
+- Role
+  - 모델 개발 및 서빙
+
+2. 👨‍💻 성창엽
+
+- Position : 팀원
+- Github: <https://github.com/scy6500>
+- Email : scy6500@kookmin.ac.kr
+- Role
+  - 서버 개발 및 모델 개발
+
+3. 👨‍💻 안수현
+
+- Position : 팀원
+- Github: <https://github.com/3uhyeonr>
+- Email : saker123456@kookmin.ac.kr
+- Role
+  - 모바일 앱
+
+4. 🧑🏻‍💻 김영석
+
+- Position : 팀원
+- Github: <https://github.com/youngseok0>
+- Email : kys030908@kookmin.ac.kr
+- Role
+
+5. 😨 신수민
+
+- Position : 팀원
+- Github: <https://github.com/syngrxm>
+- Email : 5luck21948@kookmin.ac.kr
+- Role
+  - 서버 개발
+---
 # Project 'SeeYourSound' Backend
 ### 1. 'SeeYourSound'에서의 백엔드
 #### App과 Model Server 그리고 Firebase와의 원활한 연결, API 개발 부분을 맡았다.
@@ -12,10 +59,18 @@
 #### d. [Websoket](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/websocket.py): Websocket Entire Manager - 사용자의 기기로부터 앱을 통해 들어오는 소리를 실시간 스트리밍한다.
 ---
 ### 4. How to set
-* #### 터미널에서 실행할 명령어
+* #### repository clone 받기
 ```python
 git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
 ```
+* #### Python 가상 환경 설정
+```python
+python3 -m venv .venv
+```
+```python
+. .venv/bin/activate
+```
+* #### 필요한 module 설치
 ```python
 pip install -r requirements.txt
 ```
@@ -37,5 +92,5 @@ MODEL_SERVER_URL
 ---
 ### 5. How to run
 ```python
-uvicorn app:app --host=0.0.0.0 --port={port}
+uvicorn app:app --host=0.0.0.0 --port={$port}
 ```
