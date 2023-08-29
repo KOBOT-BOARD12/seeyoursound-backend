@@ -26,6 +26,5 @@ async def select_class(data: ClassSetting):
             user_doc_ref.update({"class_config": existing_class_config})
         else:
             user_doc_ref.set({"class_config": class_config_str_keys})
-
-    except Exception as e:
-        print(e)
+    except:
+        HTTPException(status_code=400, detail="잘못된 요청이 들어왔습니다.")
