@@ -25,7 +25,7 @@
 3. 👨‍💻 안수현
 
 - Position : 팀원
-- Github: <https://github.com/3uhyeonr>
+- Github: <https://github.com/3uhyeon>
 - Email : saker123456@kookmin.ac.kr
 - Role
   - 모바일 앱
@@ -65,12 +65,12 @@ git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
 ```
 * #### Python 가상 환경 설정
 ```python
-python3 -m venv .venv
+python -m venv .venv
 ```
 ```python
 . .venv/bin/activate
 ```
-* #### 필요한 module 설치
+* #### 필요한 package 설치
 ```python
 pip install -r requirements.txt
 ```
