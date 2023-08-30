@@ -37,10 +37,13 @@ async def select_class(data: ClassData):
 @return_class_router.post("/return_class")
 async def return_class(data: ReturnData):
     user_id = data.user_id
-    user_info = db.collection("Users").document(user_id).get(field_paths=["current_class"])
+    user_doc_ref = db.collection("Users").document(user_id)
+    user_info = user_doc_ref.get(field_paths=["current_class"])
 
     if user_info.exists:
         existing_current_class = user_info.get("current_class")
         return existing_current_class
     else:
-        return {}
+        initial_value = {str(key): True for key in range(5)}
+        user_doc_ref.set({"current_class": initial_value})
+        return initial_value
