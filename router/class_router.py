@@ -13,8 +13,8 @@ class ClassData(BaseModel):
 class ReturnData(BaseModel):
     user_id: str
 
-@class_router.post("/select_class")
-async def select_class(data: ClassData):
+@class_router.post("/update_class")
+async def update_class(data: ClassData):
     try:
         user_id = data.user_id
         current_class = data.sound_class
