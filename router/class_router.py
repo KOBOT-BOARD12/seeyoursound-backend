@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from typing import Dict
 
 class_router = APIRouter()
-return_class_router = APIRouter()
 
 class ClassData(BaseModel):
     user_id: str
@@ -34,7 +33,7 @@ async def update_class(data: ClassData):
     except:
         raise HTTPException(status_code=400, detail="잘못된 요청이 들어왔습니다.")
 
-@return_class_router.post("/return_class")
+@class_router.post("/return_class")
 async def return_class(data: ReturnData):
     user_id = data.user_id
     user_doc_ref = db.collection("Users").document(user_id)
