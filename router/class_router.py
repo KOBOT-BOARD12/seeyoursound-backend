@@ -4,10 +4,14 @@ from pydantic import BaseModel
 from typing import Dict
 
 class_router = APIRouter()
+return_class_router = APIRouter()
 
 class ClassData(BaseModel):
     user_id: str
     sound_class: Dict[int, bool]
+
+class ReturnData(BaseModel):
+    user_id: str
 
 @class_router.post("/select_class")
 async def select_class(data: ClassData):
@@ -29,3 +33,14 @@ async def select_class(data: ClassData):
 
     except:
         raise HTTPException(status_code=400, detail="잘못된 요청이 들어왔습니다.")
+
+@return_class_router.post("/return_class")
+async def return_class(data: ReturnData):
+    user_id = data.user_id
+    user_info = db.collection("Users").document(user_id).get(field_paths=["current_class"])
+
+    if user_info.exists:
+        existing_current_class = user_info.get("current_class")
+        return existing_current_class
+    else:
+        return {}
