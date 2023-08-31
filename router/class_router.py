@@ -17,9 +17,7 @@ async def update_class(data: ClassData):
     try:
         user_id = data.user_id
         current_class = data.sound_class
-
         new_class_dictionary = {str(key): value for key, value in current_class.items()}
-
         user_doc_ref = db.collection("Users").document(user_id)
         user_doc = user_doc_ref.get()
 
@@ -29,7 +27,7 @@ async def update_class(data: ClassData):
             user_doc_ref.update({"current_class": existing_class})
         else:
             user_doc_ref.set({"current_class": new_class_dictionary}) 
-
+            
     except:
         raise HTTPException(status_code=400, detail="잘못된 요청이 들어왔습니다.")
 
@@ -37,12 +35,14 @@ async def update_class(data: ClassData):
 async def return_class(data: ReturnData):
     user_id = data.user_id
     user_doc_ref = db.collection("Users").document(user_id)
-    user_info = user_doc_ref.get(field_paths=["current_class"])
-
-    if user_info.exists:
-        existing_current_class = user_info.get("current_class")
+    user_info = user_doc_ref.get()
+    
+    if user_info.exists and user_info.to_dict().get("current_class"): #여기서 and 이하는 current 필드가 존재한다면
+        existing_current_class = user_info.to_dict()["current_class"]
         return existing_current_class
     else:
         initial_value = {str(key): True for key in range(5)}
-        user_doc_ref.set({"current_class": initial_value})
+        existing_data = user_info.to_dict() if user_info.exists else {} #기존데이터유지코드
+        existing_data["current_class"] = initial_value
+        user_doc_ref.set(existing_data) 
         return initial_value
