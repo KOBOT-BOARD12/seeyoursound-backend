@@ -4,6 +4,16 @@
 #### 청각 장애인과 길에서 이어폰을 끼고 다니는 즉, 외부 소리가 차단된 사람들이 도로 환경에서 발생하는 소리들을 인식하도록 하는 장치가 필요하다고 생각한다. 
 ### 🔦 개발 목적
 #### 소리를 실시간으로 인식 후, 디스플레이 알림과 진동으로 소리의 종류나 미리 등록된 키워드 여부, 소리의 방향을 알려 주는 서비스를 만드는 것이 목적이다.
+### 🎉  See Your Sound App 실행 순서
+0. 레포지토리 다운로드 - 중앙 서버
+```
+git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
+```
+1. 레포지토리 다운로드 - 모델 서버 (※ gpu가 탑재돼 있는 환경에서 실행시키는 것이 안정적입니다.)
+```
+https://github.com/KOBOT-BOARD12/seeyoursound-model-serving.git
+```
+2. SeeYourSound App을 실행시켜 회원가
 ---
 # 팀원 소개 및 역할
 1. 👨‍💻 윤민상
@@ -61,18 +71,18 @@
 ---
 ### 4. How to set
 * #### repository clone 받기
-```python
+```shell
 git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
 ```
 * #### Python 가상 환경 설정
-```python
+```shell
 python -m venv .venv
 ```
-```python
+```shell
 . .venv/bin/activate
 ```
 * #### 필요한 package 설치
-```python
+```shell
 pip install -r requirements.txt
 ```
 * #### ENV
