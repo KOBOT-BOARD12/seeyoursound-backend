@@ -7,6 +7,11 @@ RUN apt-get install -y python3.11 python3.11-distutils
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
 RUN apt install -y python3-pip
 
+# install sox
+RUN apt-get install -y libsox-fmt-all
+RUN apt-get install -y sox
+RUN pip3 install sox
+
 WORKDIR /app
 
 COPY . .
