@@ -9,7 +9,7 @@
 ```
 git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
 ```
-1. 레포지토리 다운로드 - 모델 서버 (※ gpu가 탑재돼 있는 환경에서 실행시키는 것이 안정적입니다.)
+1. 레포지토리 다운로드 - 모델 서버 `(※ gpu가 탑재돼 있는 환경에서 실행시키는 것이 안정적입니다`
 ```
 https://github.com/KOBOT-BOARD12/seeyoursound-model-serving.git
 ```
