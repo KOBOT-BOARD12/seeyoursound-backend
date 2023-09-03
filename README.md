@@ -135,7 +135,7 @@ UNIVERSE_DOMAIN
 MODEL_SERVER_URL
 ```
 ---
-### 5. How to run
+### 7. How to run
 ```python
 uvicorn app:app --host=0.0.0.0 --port={$port}
 ```
