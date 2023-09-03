@@ -31,7 +31,7 @@ async def websocket_endpoint(websocket: WebSocket):
             json_data = json.loads(data)
 
             top_channel, bottom_channel, uid = json_data["top_channel"], json_data["bottom_channel"], json_data["uid"]
-            filtered_class = [json_data["class_0"], json_data["class_1"], json_data["class_2"], json_data["class_3"], True]
+            filtered_class = [json_data["class_0"], json_data["class_1"], json_data["class_2"], json_data["class_3"], True, True]
             if len(top_channel) == 0 or len(bottom_channel) == 0:
                 continue
             top_channel_arr.append(top_channel)
