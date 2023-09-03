@@ -37,6 +37,7 @@ async def receive_data(data: Register):
     keyword = data.keyword
     keywords_ref = db.collection("Users").document(user_id)
     doc = keywords_ref.get()
+    
     if doc.exists:
         existing_keywords = doc.to_dict().get("keywords", {})
         if keyword in existing_keywords:
@@ -45,11 +46,12 @@ async def receive_data(data: Register):
             raise HTTPException(status_code=400, detail="키워드는 최대 세 개까지만 추가할 수 있습니다.")
     else:
         existing_keywords = {}
+
     ipa_of_keyword = convert_to_ipa(keyword).replace(' ', '')
     existing_keywords[keyword] = ipa_of_keyword
     keywords_ref.set({
         "keywords": existing_keywords
-    })
+    }, merge=True)
     return {"message": "키워드가 성공적으로 추가되었습니다."}
 
 @keyword_router.post("/return_keyword")
