@@ -30,7 +30,7 @@ uvicorn app:app --port={$port}
 - Role
   - 모델 개발 및 서빙
 
-2. 👨‍💻 성창엽
+2. 🌖 성창엽
 
 - Position : 팀원
 - Github: <https://github.com/scy6500>
@@ -38,7 +38,7 @@ uvicorn app:app --port={$port}
 - Role
   - 서버 개발 및 모델 개발
 
-3. 👨‍💻 안수현
+3. 🖤 안수현
 
 - Position : 팀원
 - Github: <https://github.com/3uhyeon>
@@ -54,7 +54,7 @@ uvicorn app:app --port={$port}
 - Role
   - 모델 개발 및 서빙
 
-5. 😨 신수민
+5. 🫨 신수민
 
 - Position : 팀원
 - Github: <https://github.com/syngrxm>
