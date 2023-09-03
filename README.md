@@ -119,7 +119,7 @@ docker build backend .
 docker run -p 8000:8000 backend
 ```
 
-* #### ENV
+### 6. ENV
 ```
 TYPE
 PROJECT_ID
