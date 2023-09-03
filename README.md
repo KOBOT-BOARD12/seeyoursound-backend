@@ -76,6 +76,9 @@ uvicorn app:app --port={$port}
 #### d. [Websoket](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/websocket.py): Websocket Entire Manager - 사용자의 기기로부터 앱을 통해 들어오는 소리를 실시간 스트리밍한다.
 ---
 ### 4. How to set (without Docker)
+* #### Firebase 프로젝트 생성
+  * ##### [공식 문서](https://firebase.google.com/)에 따라 Firebase 프로젝트를 생성한다.
+  * ##### 6번 문항의 ENV 항목을 참고하여 .env 파일을 채워서 초기 설정 작업을 진행한다.
 * #### repository clone 받기
 ```shell
 git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
