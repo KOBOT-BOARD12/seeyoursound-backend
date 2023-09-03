@@ -1,11 +1,11 @@
 # 👀🔉 See Your Sound
 <ㄱ 림>
 ### 🔧 개발 배경
-#### 청각 장애인과 길에서 이어폰을 끼고 다니는 즉, 외부 소리가 차단된 사람들이 도로 환경에서 발생하는 소리들을 인식하도록 하는 장치가 필요하다고 생각한다. 
+#### 청각 장애인과 길에서 이어폰을 끼고 다니는 즉, 외부 소리가 차단된 사람들이 도로 환경에서 발생하는 소리들을 인식하도록 하는 장치가 필요하다고 생각했다.
 ### 🔦 개발 목적
 #### 소리를 실시간으로 인식 후, 디스플레이 알림과 진동으로 소리의 종류나 미리 등록된 키워드 여부, 소리의 방향을 알려 주는 서비스를 만드는 것이 목적이다.
 ### 🎉  See Your Sound App 실행 순서
-0. 레포지토리 다운로드 - 중앙 서버
+0. 레포지토리 다운로드 - 중앙 서비스 서버
 ```
 git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
 ```
@@ -13,7 +13,13 @@ git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
 ```
 https://github.com/KOBOT-BOARD12/seeyoursound-model-serving.git
 ```
-2. SeeYourSound App을 실행시켜 회원가
+2. 중앙 서비스 서버와 모델 서버를 실행시킨다. 
+```shell
+uvicorn app:app --port={$port}
+```
+3. SeeYourSound App을 실행시켜 회원가입 후 알림을 받을 클래스를 선택하고, 필요한 키워드를 등록시킨다.
+4. 주변 소리를 차단한 뒤 길을 걸으며 테스트한다. (...)
+
 ---
 # 팀원 소개 및 역할
 1. 👨‍💻 윤민상
@@ -84,6 +90,36 @@ python -m venv .venv
 * #### 필요한 package 설치
 ```shell
 pip install -r requirements.txt
+```
+* #### Install sox (on Linux)
+```shell
+apt-get install libsox-fmt-all
+```
+```shell
+apt-get install sox
+```
+```shell
+pip install sox
+```
+* #### Install sox (on Mac)
+```shell
+brew install sox --with-lame --with flac --with-libvorbis
+```
+```shell
+brew install sox
+```
+```shell
+pip install sox
+```
+* #### How to install Docker (on Linux)
+```shell
+curl -fsSL https://get.docker.com/ | sudo sh
+docker run ubuntu:{$version} # 실행
+```
+* #### How to install Docker (on Mac)
+```shell
+brew install Docker
+docker run --rm -it ubuntu:{$version} /bin/bash # 실행
 ```
 * #### ENV
 ```
