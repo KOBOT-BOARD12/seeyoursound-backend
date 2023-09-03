@@ -75,7 +75,7 @@ uvicorn app:app --port={$port}
 #### c. [Return Model Data](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/model_router.py): Model Data Return Router - 사용자의 개별 키워드들 모델 가중치를 받아 Firebase Storage에 저장해 준다.
 #### d. [Websoket](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/websocket.py): Websocket Entire Manager - 사용자의 기기로부터 앱을 통해 들어오는 소리를 실시간 스트리밍한다.
 ---
-### 4. How to set
+### 4. How to set (without Docker)
 * #### repository clone 받기
 ```shell
 git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
@@ -111,16 +111,14 @@ brew install sox
 ```shell
 pip install sox
 ```
-* #### How to install Docker (on Linux)
+### 5. How to set (with Docker)
 ```shell
-curl -fsSL https://get.docker.com/ | sudo sh
-docker run ubuntu:{$version} # 실행
+docker build backend .
 ```
-* #### How to install Docker (on Mac)
-```shell
-brew install Docker
-docker run --rm -it ubuntu:{$version} /bin/bash # 실행
 ```
+docker run -p 8000:8000 backend
+```
+
 * #### ENV
 ```
 TYPE
