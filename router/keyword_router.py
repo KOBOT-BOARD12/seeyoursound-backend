@@ -71,8 +71,7 @@ async def return_keyword(data: ReturnKeyword):
         if existing_keywords is not None:
             return {"keywords": existing_keywords}
         else:
-            print(existing_keywords)
-            return {}
+            return {"keywords": []}
     else:
         raise HTTPException(status_code=400, detail="등록돼 있지 않은 사용자입니다.")
 
