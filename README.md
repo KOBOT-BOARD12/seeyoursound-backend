@@ -9,7 +9,9 @@ Ubuntu 22.04.3 버전에서 개발을 진행하였다. 주 개발 환경은 Pyth
 
 ### 3. 'SeeYourSound' 백엔드의 구조
 a. [Manager](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/manager/firebase_manager.py): Manager Folder - Firebase Firestore와 연동한다.
+
 b. [Keyword](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/keyword_router.py): Keyword Router - App에서 Keyword 등록, 리턴, 삭제 API를 호출하여 Keyword를 관리할 수 있도록 해 준다.
+
 c. [Websoket](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/websocket.py): Websocket Entire Manager - 사용자의 기기로부터 앱을 통해 들어오는 소리를 실시간 스트리밍한다.
 <br>
 
