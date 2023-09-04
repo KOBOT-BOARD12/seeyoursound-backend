@@ -3,7 +3,7 @@ from firebase_admin import credentials, initialize_app, firestore, storage
 from os.path import os, join, dirname
 from dotenv import load_dotenv, find_dotenv
 
-dotenv_path = join(dirname(__file__), '.env')
+dotenv_path = join(dirname(__file__), ".env")
 load_dotenv(find_dotenv())
 
 service_account_key = {
@@ -21,9 +21,7 @@ service_account_key = {
 }
 
 cred = credentials.Certificate(service_account_key)
-firebase_admin.initialize_app(cred, {
-    "storageBucket": os.getenv("STORAGE_BUCKET_URL")
-})
+firebase_admin.initialize_app(cred, {"storageBucket": os.getenv("STORAGE_BUCKET_URL")})
 
 db = firestore.client()
 bucket = storage.bucket()

@@ -7,28 +7,34 @@ import re
 
 keyword_router = APIRouter()
 
+
 def convert_to_ipa(korean_text):
     ipa_text = phonemize(korean_text, language="ko", backend="espeak")
     return ipa_text
+
 
 class Register(BaseModel):
     user_id: str
     keyword: str
 
+
 class ReturnKeyword(BaseModel):
     user_id: str
+
 
 class DeleteKeyword(BaseModel):
     user_id: str
     keyword: str
+
 
 def validate_keyword(keyword: str):
     if not keyword:
         raise HTTPException(status_code=400, detail="키워드를 입력해 주세요.")
     if len(keyword) > 5:
         raise HTTPException(status_code=400, detail="키워드는 다섯 글자 이하로 입력해 주셔야 합니다.")
-    if not re.match(r'^[가-힣]+$', keyword):
+    if not re.match(r"^[가-힣]+$", keyword):
         raise HTTPException(status_code=400, detail="키워드는 한글로만 입력이 가능합니다.")
+
 
 @keyword_router.post("/register_keyword")
 async def receive_data(data: Register):
@@ -37,7 +43,7 @@ async def receive_data(data: Register):
     keyword = data.keyword
     keywords_ref = db.collection("Users").document(user_id)
     doc = keywords_ref.get()
-    
+
     if doc.exists:
         existing_keywords = doc.to_dict().get("keywords", {})
         if keyword in existing_keywords:
@@ -47,12 +53,11 @@ async def receive_data(data: Register):
     else:
         existing_keywords = {}
 
-    ipa_of_keyword = convert_to_ipa(keyword).replace(' ', '')
+    ipa_of_keyword = convert_to_ipa(keyword).replace(" ", "")
     existing_keywords[keyword] = ipa_of_keyword
-    keywords_ref.set({
-        "keywords": existing_keywords
-    }, merge=True)
+    keywords_ref.set({"keywords": existing_keywords}, merge=True)
     return {"message": "키워드가 성공적으로 추가되었습니다."}
+
 
 @keyword_router.post("/return_keyword")
 async def return_keyword(data: ReturnKeyword):
@@ -64,6 +69,7 @@ async def return_keyword(data: ReturnKeyword):
         return {"keywords": list(existing_keywords.keys())}
     else:
         raise HTTPException(status_code=400, detail="등록돼 있지 않은 사용자입니다.")
+
 
 @keyword_router.post("/delete_keyword")
 async def delete_data(data: DeleteKeyword):
