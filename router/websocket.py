@@ -14,7 +14,7 @@ properties.read("config.ini")
 
 ws_router = APIRouter()
 
-connected_websocket = None
+connected_websockets = []
 
 @ws_router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -23,7 +23,8 @@ async def websocket_endpoint(websocket: WebSocket):
     bottom_channel_arr = []
     await websocket.accept()
     global connected_websocket
-    connected_websocket = websocket
+    websocket_idx = len(connected_websockets)
+    connected_websockets.append(websocket)
     print("WebSocket connected.")
     try:
         while True:
@@ -38,7 +39,7 @@ async def websocket_endpoint(websocket: WebSocket):
             bottom_channel_arr.append(bottom_channel)
 
             if len(top_channel_arr) == chunk_count and len(bottom_channel_arr) == chunk_count:
-                data = {"top_channel" : ''.join(top_channel_arr), "bottom_channel" : ''.join(bottom_channel_arr), "uid" : uid, "filtered_class": filtered_class}
+                data = {"top_channel" : ''.join(top_channel_arr), "bottom_channel" : ''.join(bottom_channel_arr), "uid" : uid, "filtered_class": filtered_class, "websocket_idx": websocket_idx}
                 requests.post(os.getenv("MODEL_SERVER_URL") + "/prediction", json=data, headers={'accept': 'application/json','Content-Type': 'application/json'})
                 top_channel_arr.pop(0)
                 bottom_channel_arr.pop(0)
@@ -49,7 +50,8 @@ async def websocket_endpoint(websocket: WebSocket):
 
 @ws_router.post("/get_model_prediction")
 async def get_model_prediction(model_result: dict):
-    if connected_websocket:
-        await connected_websocket.send_text(json.dumps(model_result)) 
+    websocket = connected_websockets[model_result["websocket_idx"]]
+    if websocket:
+        await websocket.send_text(json.dumps(model_result)) 
     else:
         raise HTTPException(status_code=400, detail="연결된 웹소켓이 존재하지 않습니다.")
