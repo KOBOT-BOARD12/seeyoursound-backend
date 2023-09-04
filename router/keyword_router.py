@@ -64,9 +64,15 @@ async def return_keyword(data: ReturnKeyword):
     user_id = data.user_id
     user_ref = db.collection("Users").document(user_id)
     doc = user_ref.get()
+
     if doc.exists:
-        existing_keywords = doc.to_dict().get("keywords", [])
-        return {"keywords": list(existing_keywords.keys())}
+        user_data = doc.to_dict()
+        existing_keywords = user_data.get("keywords")
+        if existing_keywords is not None:
+            return {"keywords": existing_keywords}
+        else:
+            print(existing_keywords)
+            return {}
     else:
         raise HTTPException(status_code=400, detail="등록돼 있지 않은 사용자입니다.")
 
