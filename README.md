@@ -4,7 +4,7 @@ App과 Model Server 그리고 Firebase와의 원활한 연결, API 개발 부분
 <br>
 
 ### 2. 'SeeYourSound' 백엔드 개발 환경
-Ubuntu 22.04.3 버전에서 개발을 진행하였다. 주 개발 환경은 Python 3.10.12 버전을 사용하였다.
+Ubuntu 22.04.3 버전에서 개발을 진행하였다. 주 개발 환경은 Python 3.11.1 버전을 사용하였다.
 <br>
 
 ### 3. 'SeeYourSound' 백엔드의 구조
