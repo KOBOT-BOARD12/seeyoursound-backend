@@ -87,14 +87,13 @@ UNIVERSE_DOMAIN
 MODEL_SERVER_URL
 ```
 ### 5. How to install (without Docker)
-1. Firebase 프로젝트 생성
+* #### Firebase 프로젝트 생성
     * [공식 문서](https://firebase.google.com/)에 따라 Firebase 프로젝트를 생성한다.
     * ENV 항목을 참고하여 .env 파일을 채워서 firebase 세팅 작업을 진행한다.
-2. repository clone 받기
+* #### repository clone 받기
 ```shell
 git clone https://github.com/KOBOT-BOARD12/seeyoursound-backend.git
 ```
-3. 점삼
 * #### Python 가상 환경 설정
 ```shell
 python -m venv .venv
