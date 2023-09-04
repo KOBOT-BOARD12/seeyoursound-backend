@@ -1,18 +1,18 @@
 # Project 'SeeYourSound' Backend
 ### 1. 'SeeYourSound'에서의 백엔드
-App과 Model Server 그리고 Firebase와의 원활한 연결, API 개발 부분을 맡았다.
+App과 Model Server 그리고 Firebase와의 연결, API 개발 부분을 맡았다.
 <br>
 
 ### 2. 'SeeYourSound' 백엔드 개발 환경
-Ubuntu 22.04.3 버전에서 개발을 진행하였다. 주 개발 환경은 Python 3.11.1 버전을 사용하였다.
+Ubuntu 22.04.3, Python 3.11.1 버전에서 개발을 진행하였다.
 <br>
 
 ### 3. 'SeeYourSound' 백엔드의 구조
 a. [Manager](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/manager/firebase_manager.py): Manager Folder - Firebase Firestore와 연동한다.
 
-b. [Keyword](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/keyword_router.py): Keyword Router - App에서 Keyword 등록, 리턴, 삭제 API를 호출하여 Keyword를 관리할 수 있도록 해 준다.
+b. [Keyword](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/keyword_router.py): Keyword Router - App에서 Keyword 등록, 리턴, 삭제 API를 호출하여 Keyword를 관리할 수 있도록 한다.
 
-c. [Websoket](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/websocket.py): Websocket Entire Manager - 사용자의 기기로부터 앱을 통해 들어오는 소리를 실시간 스트리밍한다.
+c. [Websoket](https://github.com/KOBOT-BOARD12/seeyoursound-backend/blob/develop/router/websocket.py): Websocket Entire Manager - 앱으로부터 들어오는 소리를 websocket 연결을 통해 실시간 스트리밍한다.
 <br>
 
 ### 4. ENV
@@ -73,7 +73,7 @@ pip install sox
 ```
 * 실행
 ```shell
-uvicorn app:app --host=0.0.0.0 --port={$port}
+uvicorn app:app --host=0.0.0.0 --port=8000
 ```
 <br>
 
