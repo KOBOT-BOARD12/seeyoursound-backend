@@ -33,7 +33,7 @@ MODEL_SERVER_URL
 <br>
 
 ### 5-1. How to install (without Docker)
-* Firebase 프로젝트 생성
+* Firebase 프로젝트 생성 (모델 백엔드와 동일한 Firebase 프로젝트 사용)
     * [공식 문서](https://firebase.google.com/)에 따라 Firebase 프로젝트를 생성한다.
     * ENV 항목을 참고하여 .env 파일을 채워서 firebase 세팅 작업을 진행한다.
 * repository clone 받기
@@ -78,7 +78,7 @@ uvicorn app:app --host=0.0.0.0 --port=8000
 <br>
 
 ### 5-2. How to install (with Docker)
-* Firebase 프로젝트 생성
+* Firebase 프로젝트 생성 (모델 백엔드와 동일한 Firebase 프로젝트 사용)
     * [공식 문서](https://firebase.google.com/)에 따라 Firebase 프로젝트를 생성한다.
     * ENV 항목을 참고하여 .env 파일을 채워서 firebase 세팅 작업을 진행한다.
 * repository clone 받기
