@@ -69,7 +69,7 @@ async def return_keyword(data: ReturnKeyword):
         user_data = doc.to_dict()
         existing_keywords = user_data.get("keywords")
         if existing_keywords is not None:
-            return {"keywords": existing_keywords}
+            return {"keywords": list(existing_keywords.keys())}
         else:
             return {"keywords": []}
     else:
